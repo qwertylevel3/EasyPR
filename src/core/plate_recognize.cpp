@@ -14,12 +14,15 @@ int CPlateRecognize::plateRecognize(Mat src,
 
   std::vector<CPlate> plateVec;
 
+
+
   // 进行深度定位，使用颜色信息与二次Sobel
 
   int resultPD = plateDetect(src, plateVec, kDebug, 0);
 
   if (resultPD == 0) {
     size_t num = plateVec.size();
+    //std::cout<<num<<std::endl;
     int index = 0;
 
     //依次识别每个车牌内的符号
@@ -49,7 +52,7 @@ int CPlateRecognize::plateRecognize(Mat src,
     if (getPDDebug()) {
       Mat result;
       src.copyTo(result);
-
+      // num plate number
       for (size_t j = 0; j < num; j++) {
         CPlate item = plateVec[j];
         Mat plate = item.getPlateMat();
@@ -78,8 +81,9 @@ int CPlateRecognize::plateRecognize(Mat src,
       }
 
       //显示定位框的图片
+      //imwrite("temp_picture.jpg",result);
 
-      showResult(result);
+      //showResult(result);
     }
   }
 

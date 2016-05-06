@@ -190,6 +190,7 @@ int CPlateLocate::sobelFrtSearch(const Mat &src,
     outRects.push_back(safeBoundRect);
   }
   return 0;
+
 }
 
 //! Sobel第二次搜索,对断裂的部分进行再次的处理

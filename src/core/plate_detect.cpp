@@ -40,6 +40,38 @@ int CPlateDetect::plateDetect(Mat src, std::vector<CPlate> &resultVec,
 
   {
     m_plateLocate->plateSobelLocate(src, sobel_Plates, index);
+
+
+
+
+    //show the temp plate location
+    Mat plateLocationTemp;
+    src.copyTo(plateLocationTemp);
+    std::cout<<sobel_Plates.size()<<std::endl;
+    for (size_t j = 0; j < sobel_Plates.size(); j++) {
+        CPlate item = sobel_Plates[j];
+        Mat plate = item.getPlateMat();
+
+
+        RotatedRect minRect = item.getPlatePos();
+        Point2f rect_points[4];
+        minRect.points(rect_points);
+
+        Scalar lineColor = Scalar(0, 255, 0);
+
+        //if (item.getPlateLocateType() == SOBEL) lineColor = Scalar(255, 0, 0);
+
+        //if (item.getPlateLocateType() == COLOR) lineColor = Scalar(0, 255, 0);
+
+        for (int j = 0; j < 4; j++)
+            line(plateLocationTemp, rect_points[j], rect_points[(j + 1) % 4], lineColor, 2,
+                            8);
+    }
+    imwrite("temp_picture.jpg",plateLocationTemp);
+
+
+
+
     PlateJudge::instance()->plateJudge(sobel_Plates, sobel_result_Plates);
 
     for (size_t i = 0; i < sobel_result_Plates.size(); i++) {
@@ -59,6 +91,12 @@ int CPlateDetect::plateDetect(Mat src, std::vector<CPlate> &resultVec,
     CPlate plate = all_result_Plates[i];
     resultVec.push_back(plate);
   }
+  //std::cout<<color_Plates.size()<<std::endl;
+  //std::cout<<sobel_Plates.size()<<std::endl;
+  //std::cout<<color_result_Plates.size()<<std::endl;
+  //std::cout<<sobel_result_Plates.size()<<std::endl;
+  //std::cout<<resultVec.size()<<std::endl;
+
   return 0;
 }
 

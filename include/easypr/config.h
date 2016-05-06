@@ -47,7 +47,7 @@ static const char *kChars[] = {
 
 static const int kCharsTotalNumber = 65;
 
-static bool kDebug = false;
+static bool kDebug = true;
 
 }
 
